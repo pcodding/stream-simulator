@@ -72,7 +72,6 @@ public class App {
 								return new DefaultEventCollector(numberOfEvents);
 							}
 						}), "eventCollector");
-				System.out.println(eventCollector.path());
 				final ActorRef master = system.actorOf(new Props(
 						new UntypedActorFactory() {
 							public UntypedActor create() {
