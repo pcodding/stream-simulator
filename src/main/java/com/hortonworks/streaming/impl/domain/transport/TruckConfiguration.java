@@ -9,7 +9,6 @@ public class TruckConfiguration {
 	private static int lastTruckId = 10;
 	private static int nextDriverId = 0;
 	private static List<Driver> drivers;
-	private static int numberOfEventEmitters = 0;
 	private static Logger logger = Logger.getLogger(TruckConfiguration.class);
 
 	static {
@@ -26,18 +25,15 @@ public class TruckConfiguration {
 	}
 
 	public synchronized static Driver getNextDriver() {
-		if (drivers.size() < numberOfEventEmitters) {
-			for (int i = drivers.size() + 1; i <= numberOfEventEmitters; i++) {
-				drivers.add(new Driver(i, 100));
-			}
+		Driver nextDriver;
+		try {
+			nextDriver = drivers.get(nextDriverId);
+		} catch (IndexOutOfBoundsException e) {
+			drivers.add(new Driver(nextDriverId + 1, 100));
 		}
-		Driver nextDriver = drivers.get(nextDriverId);
+		nextDriver = drivers.get(nextDriverId);
 		logger.debug("Next Driver: " + nextDriver.toString());
 		nextDriverId++;
 		return nextDriver;
-	}
-
-	public static void setNumberOfEventEmitters(int numberOfEmitters) {
-		numberOfEventEmitters = numberOfEmitters;
 	}
 }

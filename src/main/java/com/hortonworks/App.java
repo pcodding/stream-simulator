@@ -11,7 +11,6 @@ import akka.actor.UntypedActorFactory;
 
 import com.hortonworks.streaming.impl.collectors.DefaultEventCollector;
 import com.hortonworks.streaming.impl.domain.AbstractEventCollector;
-import com.hortonworks.streaming.impl.domain.transport.TruckConfiguration;
 import com.hortonworks.streaming.impl.messages.StartSimulation;
 import com.hortonworks.streaming.impl.messages.StopSimulation;
 import com.hortonworks.streaming.listeners.SimulatorListener;
@@ -25,8 +24,7 @@ public class App {
 				final int numberOfEvents = Integer.parseInt(args[1]);
 				final Class eventEmitterClass = Class.forName(args[2]);
 				final Class eventCollectorClass = Class.forName(args[3]);
-				TruckConfiguration
-						.setNumberOfEventEmitters(numberOfEventEmitters);
+				
 				ActorSystem system = ActorSystem.create("EventSimulator");
 				final ActorRef listener = system.actorOf(new Props(
 						SimulatorListener.class), "listener");
