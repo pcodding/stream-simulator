@@ -27,9 +27,13 @@ public class TruckConfiguration {
 		drivers.add(lessRiskyDriver);
 		startingPoints = new LinkedList<TimestampedLocation>();
 		startingPoints.add(new TimestampedLocation(new GregorianCalendar(),
-				new Location(4.87, 44.93, 150.0f)));
+				new Location(-93.266670, 44.983334, 150.0f)));
 		startingPoints.add(new TimestampedLocation(new GregorianCalendar(),
-				new Location(5.73, 45.18, 220.0f)));
+				new Location(-82.907123, 40.417287, 220.0f)));
+		startingPoints.add(new TimestampedLocation(new GregorianCalendar(),
+				new Location(-96.800451, 32.780140, 20.0f)));
+		startingPoints.add(new TimestampedLocation(new GregorianCalendar(),
+				new Location(-112.074037, 33.448377, 20.0f)));
 		startingPointIterator = startingPoints.iterator();
 	}
 

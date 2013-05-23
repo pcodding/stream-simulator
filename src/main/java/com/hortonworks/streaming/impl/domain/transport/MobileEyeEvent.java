@@ -32,7 +32,7 @@ public class MobileEyeEvent extends Event {
 
 	@Override
 	public String toString() {
-		return location.getLatitude() + "|" + location.getLongitude() + "|"
-				+ truck.toString() + eventType.toString();
+		return truck.toString() + eventType.toString() + "|"
+				+ location.getLatitude() + "|" + location.getLongitude();
 	}
 }
