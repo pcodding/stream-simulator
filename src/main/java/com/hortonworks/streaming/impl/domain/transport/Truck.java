@@ -30,7 +30,10 @@ public class Truck extends AbstractEventEmitter {
 		driver = TruckConfiguration.getNextDriver();
 		truckId = TruckConfiguration.getNextTruckId();
 		eventTypes = Arrays.asList(MobileEyeEventTypeEnum.values());
-		startingPoint = TruckConfiguration.getNextStartingPoint();
+		if (driver.getStartingPoint() == null)
+			startingPoint = TruckConfiguration.getNextStartingPoint();
+		else
+			startingPoint = driver.getStartingPoint();
 		addWayPoint(startingPoint);
 	}
 
@@ -52,7 +55,8 @@ public class Truck extends AbstractEventEmitter {
 				.getFinish().getLocation());
 		addWayPoint(new TimestampedLocation(new GregorianCalendar(),
 				nextLocation));
-		//System.out.println("Truck traveled: " + path.getOverGroundAverageSpeed() + "MPH");
+		// System.out.println("Truck traveled: " +
+		// path.getOverGroundAverageSpeed() + "MPH");
 		messageCount++;
 		if (messageCount % driver.getRiskFactor() == 0)
 			return new MobileEyeEvent(nextLocation, getRandomUnsafeEvent(),
@@ -63,8 +67,10 @@ public class Truck extends AbstractEventEmitter {
 	}
 
 	private Location getNextLocationNearExistingLocation(Location location) {
-		Location nextLocation = new Location(location.getLongitude() + Math.abs(Math.random() - 0.7),
-				location.getLatitude() + Math.abs(Math.random() - 0.7), location.getAltitude() + Math.random());
+		Location nextLocation = new Location(location.getLongitude()
+				+ Math.abs(Math.random() - 0.7), location.getLatitude()
+				+ Math.abs(Math.random() - 0.7), location.getAltitude()
+				+ Math.random());
 		return nextLocation;
 	}
 

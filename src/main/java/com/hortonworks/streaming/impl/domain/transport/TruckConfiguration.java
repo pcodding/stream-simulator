@@ -21,7 +21,8 @@ public class TruckConfiguration {
 
 	static {
 		drivers = new ArrayList<Driver>();
-		Driver riskyDriver = new Driver(1, 30);
+		Driver riskyDriver = new Driver(1, 30, new TimestampedLocation(new GregorianCalendar(),
+				new Location(-93.2828, 44.8833, 150.0f)));
 		Driver lessRiskyDriver = new Driver(2, 60);
 		drivers.add(riskyDriver);
 		drivers.add(lessRiskyDriver);
