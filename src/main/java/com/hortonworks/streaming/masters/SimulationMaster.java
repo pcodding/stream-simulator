@@ -26,13 +26,15 @@ public class SimulationMaster extends UntypedActor {
 	public SimulationMaster(int numberOfEventEmitters, Class eventEmitterClass,
 			ActorRef listener) {
 		logger.info("Starting simulation with " + numberOfEventEmitters
-				+ " of " + eventEmitterClass + " Event Emitters");
+				+ " of " + eventEmitterClass + " Event Emitters -- "
+				+ eventEmitterClass.toString());
 		this.listener = listener;
 		this.numberOfEventEmitters = numberOfEventEmitters;
 		this.eventEmitterClass = eventEmitterClass;
 		eventEmitterRouter = this.getContext().actorOf(
-				new Props(eventEmitterClass).withRouter(new RoundRobinRouter(
-						numberOfEventEmitters)), "eventEmitterRouter");
+				Props.create(eventEmitterClass).withRouter(
+						new RoundRobinRouter(numberOfEventEmitters)),
+				"eventEmitterRouter");
 	}
 
 	@Override

@@ -24,52 +24,11 @@ public class App {
 				final int numberOfEvents = Integer.parseInt(args[1]);
 				final Class eventEmitterClass = Class.forName(args[2]);
 				final Class eventCollectorClass = Class.forName(args[3]);
-				
+
 				ActorSystem system = ActorSystem.create("EventSimulator");
-				final ActorRef listener = system.actorOf(new Props(
-						SimulatorListener.class), "listener");
-				final ActorRef eventCollector = system.actorOf(new Props(
-						new UntypedActorFactory() {
-							public UntypedActor create() {
-								try {
-									Constructor cons = eventCollectorClass
-											.getConstructor(new Class[] { int.class });
-									return (AbstractEventCollector) cons
-											.newInstance(numberOfEvents);
-								} catch (SecurityException e) {
-									System.err
-											.println("Could not instantiate event collector: "
-													+ e.getMessage());
-									e.printStackTrace();
-								} catch (NoSuchMethodException e) {
-									System.err
-											.println("Could not instantiate event collector: "
-													+ e.getMessage());
-									e.printStackTrace();
-								} catch (IllegalArgumentException e) {
-									System.err
-											.println("Could not instantiate event collector: "
-													+ e.getMessage());
-									e.printStackTrace();
-								} catch (InstantiationException e) {
-									System.err
-											.println("Could not instantiate event collector: "
-													+ e.getMessage());
-									e.printStackTrace();
-								} catch (IllegalAccessException e) {
-									System.err
-											.println("Could not instantiate event collector: "
-													+ e.getMessage());
-									e.printStackTrace();
-								} catch (InvocationTargetException e) {
-									System.err
-											.println("Could not instantiate event collector: "
-													+ e.getMessage());
-									e.printStackTrace();
-								}
-								return new DefaultEventCollector(numberOfEvents);
-							}
-						}), "eventCollector");
+				final ActorRef listener = system.actorOf(
+						Props.create(SimulatorListener.class), "listener");
+				final ActorRef eventCollector = system.actorOf(Props.create(DefaultEventCollector.class), "eventCollector");
 				final ActorRef master = system.actorOf(new Props(
 						new UntypedActorFactory() {
 							public UntypedActor create() {
@@ -80,7 +39,7 @@ public class App {
 						}), "master");
 				Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 					public void run() {
-						master.tell(new StopSimulation());
+						master.tell(new StopSimulation(), master);
 					}
 				}));
 				master.tell(new StartSimulation(), master);

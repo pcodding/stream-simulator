@@ -6,4 +6,6 @@ public abstract class AbstractEventEmitter extends AbstractDomainObject {
 	public AbstractEventEmitter() {
 
 	}
+
+	public abstract Event generateEvent();
 }
