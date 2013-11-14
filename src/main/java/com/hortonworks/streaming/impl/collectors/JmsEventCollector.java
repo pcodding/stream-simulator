@@ -34,7 +34,7 @@ public class JmsEventCollector extends AbstractEventCollector {
 			connection = connectionFactory.createConnection();
 			connection.start();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			destination = session.createQueue("sensor_data");
+			destination = session.createQueue("stream_data");
 			producer = session.createProducer(destination);
 			producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		} catch (JMSException e) {
