@@ -1,16 +1,11 @@
 package com.hortonworks;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.actor.UntypedActor;
 import akka.actor.UntypedActorFactory;
 
-import com.hortonworks.streaming.impl.collectors.DefaultEventCollector;
-import com.hortonworks.streaming.impl.domain.AbstractEventCollector;
 import com.hortonworks.streaming.impl.messages.StartSimulation;
 import com.hortonworks.streaming.impl.messages.StopSimulation;
 import com.hortonworks.streaming.listeners.SimulatorListener;
@@ -28,7 +23,9 @@ public class App {
 				ActorSystem system = ActorSystem.create("EventSimulator");
 				final ActorRef listener = system.actorOf(
 						Props.create(SimulatorListener.class), "listener");
-				final ActorRef eventCollector = system.actorOf(Props.create(DefaultEventCollector.class), "eventCollector");
+				final ActorRef eventCollector = system.actorOf(
+						Props.create(eventCollectorClass), "eventCollector");
+				System.out.println(eventCollector.path());
 				final ActorRef master = system.actorOf(new Props(
 						new UntypedActorFactory() {
 							public UntypedActor create() {
