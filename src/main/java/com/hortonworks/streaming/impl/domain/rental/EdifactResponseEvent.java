@@ -32,7 +32,8 @@ public class EdifactResponseEvent extends Event {
 	public EdifactResponseEvent(EdifactRequestEvent request,
 			HashMap<String, String> serviceConfig, boolean changeRate) {
 		this(request, serviceConfig);
-		baseRate += (2 + new Random().nextInt(10));
+		if (changeRate == true)
+			baseRate += (2 + new Random().nextInt(10));
 	}
 
 	@Override
