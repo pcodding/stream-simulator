@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 
 import com.hortonworks.streaming.impl.domain.Event;
 
@@ -26,6 +27,12 @@ public class EdifactResponseEvent extends Event {
 		airportPremium = hashAirport(request.getAirportCode());
 		baseRate = Double.parseDouble(baseRateAsString);
 		carClassMultiplier = Double.parseDouble(carClassMultiplierAsString);
+	}
+
+	public EdifactResponseEvent(EdifactRequestEvent request,
+			HashMap<String, String> serviceConfig, boolean changeRate) {
+		this(request, serviceConfig);
+		baseRate += (2 + new Random().nextInt(10));
 	}
 
 	@Override

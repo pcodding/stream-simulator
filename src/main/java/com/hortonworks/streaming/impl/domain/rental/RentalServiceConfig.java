@@ -13,18 +13,21 @@ public class RentalServiceConfig {
 		ehiOpts.put("companyName", "ehi");
 		ehiOpts.put("baseRate", "22.65");
 		ehiOpts.put("carClassMultiplier", "0.3");
+		ehiOpts.put("rateChangeEveryEvents", "10");
 		services.put("ehi", ehiOpts);
 
 		HashMap<String, String> hertzOpts = new HashMap<String, String>();
 		hertzOpts.put("companyName", "hertz");
 		hertzOpts.put("baseRate", "25.29");
 		hertzOpts.put("carClassMultiplier", "0.4");
+		hertzOpts.put("rateChangeEveryEvents", "100");
 		services.put("hertz", hertzOpts);
 
 		HashMap<String, String> alamoOpts = new HashMap<String, String>();
 		alamoOpts.put("companyName", "alamo");
 		alamoOpts.put("baseRate", "25.29");
 		alamoOpts.put("carClassMultiplier", "0.4");
+		alamoOpts.put("rateChangeEveryEvents", "50");
 		services.put("alamo", alamoOpts);
 	}
 

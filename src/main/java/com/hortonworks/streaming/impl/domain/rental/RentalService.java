@@ -3,6 +3,8 @@ package com.hortonworks.streaming.impl.domain.rental;
 import java.util.HashMap;
 import java.util.Random;
 
+import org.apache.log4j.Logger;
+
 import akka.actor.ActorSelection;
 
 import com.hortonworks.streaming.impl.domain.AbstractEventEmitter;
@@ -13,6 +15,8 @@ public class RentalService extends AbstractEventEmitter {
 	private String rentalServiceId = new String();
 	private HashMap<String, String> rentalServiceConfig = null;
 	private Random rand = new Random();
+	private int numberOfEvents = 0;
+	private Logger logger = Logger.getLogger(RentalService.class);
 
 	public RentalService(String rentalServiceId,
 			HashMap<String, String> rentalServiceConfig) {
@@ -27,8 +31,16 @@ public class RentalService extends AbstractEventEmitter {
 
 	private EdifactResponseEvent generateResponseFromRequest(
 			EdifactRequestEvent nextEvent) {
+		numberOfEvents++;
+		boolean changeRate = false;
+		if (numberOfEvents
+				% Integer.parseInt(rentalServiceConfig
+						.get("rateChangeEveryEvents")) == 0) {
+			changeRate = true;
+			logger.debug("Changing Rates for " + rentalServiceId);
+		}
 		EdifactResponseEvent responseEvent = new EdifactResponseEvent(
-				nextEvent, rentalServiceConfig);
+				nextEvent, rentalServiceConfig, changeRate);
 		return responseEvent;
 	}
 
