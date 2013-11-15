@@ -23,10 +23,7 @@ public class JmsEventCollector extends AbstractEventCollector {
 	private MessageProducer producer = null;
 
 	public JmsEventCollector() {
-	}
-
-	public JmsEventCollector(int maxEvents) {
-		super(maxEvents);
+		super();
 		logger.debug("Setting up JMS Event Collector");
 		try {
 			connectionFactory = new ActiveMQConnectionFactory(user, password,
@@ -42,12 +39,17 @@ public class JmsEventCollector extends AbstractEventCollector {
 		}
 	}
 
+	public JmsEventCollector(int maxEvents) {
+		super(maxEvents);
+	}
+
 	@Override
 	public void onReceive(Object message) throws Exception {
 		logger.info(message);
 		try {
 			TextMessage textMessage = session.createTextMessage(message
 					.toString());
+			System.out.println(message.toString());
 			producer.send(textMessage);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
