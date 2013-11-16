@@ -47,7 +47,8 @@ public class AggregationServiceSource extends AbstractEventEmitter {
 	}
 
 	private String getNextPickupTime() {
-		return getNextPaddedInt(12) + "00";
+		String[] minutes = { "00", "15", "30", "45" };
+		return getNextPaddedInt(24) + minutes[rand.nextInt(minutes.length - 1)];
 	}
 
 	private String getNextReturnDate(String pickupDate) {
@@ -55,7 +56,8 @@ public class AggregationServiceSource extends AbstractEventEmitter {
 	}
 
 	private String getNextReturnTime() {
-		return getNextPaddedInt(12) + "00";
+		String[] minutes = { "00", "15", "30", "45" };
+		return getNextPaddedInt(24) + minutes[rand.nextInt(minutes.length - 1)];
 	}
 
 	private String getNextIata() {
