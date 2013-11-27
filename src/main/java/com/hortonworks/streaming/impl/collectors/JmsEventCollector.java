@@ -12,6 +12,8 @@ import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import com.hortonworks.streaming.impl.domain.AbstractEventCollector;
+import com.hortonworks.streaming.impl.messages.DumpStats;
+import com.hortonworks.streaming.results.utils.ConfigurationUtil;
 
 public class JmsEventCollector extends AbstractEventCollector {
 	private ActiveMQConnectionFactory connectionFactory;
@@ -24,14 +26,20 @@ public class JmsEventCollector extends AbstractEventCollector {
 
 	public JmsEventCollector() {
 		super();
-		logger.debug("Setting up JMS Event Collector");
 		try {
+			String host = ConfigurationUtil.getInstance().getProperty(
+					"jms.host");
+			String port = ConfigurationUtil.getInstance().getProperty(
+					"jms.port");
+			logger.debug("Setting up JMS Event Collector with host: " + host
+					+ " and port: " + port);
 			connectionFactory = new ActiveMQConnectionFactory(user, password,
-					"tcp://sandbox:61616");
+					"tcp://" + host + ":" + port);
 			connection = connectionFactory.createConnection();
 			connection.start();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-			destination = session.createQueue("stream_data");
+			destination = session.createQueue(ConfigurationUtil.getInstance()
+					.getProperty("jms.queue"));
 			producer = session.createProducer(destination);
 			producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 		} catch (JMSException e) {
@@ -45,12 +53,15 @@ public class JmsEventCollector extends AbstractEventCollector {
 
 	@Override
 	public void onReceive(Object message) throws Exception {
-		logger.info(message);
+		logger.debug(message);
+		if (message instanceof DumpStats) {
+			logger.info("Processed " + numberOfEventsProcessed + " events");
+		}
 		try {
 			TextMessage textMessage = session.createTextMessage(message
 					.toString());
-			System.out.println(message.toString());
 			producer.send(textMessage);
+			logger.debug(message.toString());
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
