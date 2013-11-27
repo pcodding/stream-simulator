@@ -18,22 +18,19 @@ import com.hortonworks.streaming.impl.messages.EmitEvent;
 public class RequestInitiator extends AbstractEventEmitter {
 	private static final long serialVersionUID = 1L;
 	private long nextransactionId = 1555775618;
-	private static String[] airportCodes = { "ABI", "ACT", "AMA", "ATW", "AUS",
-			"BLV", "BMI", "BPT", "BRO", "BWD", "CGI", "CLL", "CMI", "COU",
-			"CRP", "CWA", "DEC", "DFW", "EAU", "ELP", "GGG", "GRB", "HRL",
-			"ILE", "IRK", "JLN", "JVL", "LBB", "LRD", "LSE", "MAF", "MCI",
-			"MDH", "MFE", "MKE", "MLI", "MSN", "MWA", "OSH", "PIA", "SAT",
-			"SGF", "SJT", "SPI", "SPS", "STL", "TBN", "TYR", "UIN", "VCT",
-			"YFC", "YSJ", "YSL" };
+	private static String[] airportCodes = { "ABI", "ACT", "AMA", "AUS", "BLV",
+			"BPT", "BRO", "CLL", "COU", "CRP", "DFW", "ELP", "GGG", "GRB",
+			"HRL", "LBB", "LRD", "MAF", "MCI", "MFE", "MKE", "MSN", "ORD",
+			"SAT", "SJT", "SPS", "STL", "TBN", "TYR", "YFC", "YSJ" };
 	private Random rand = new Random();
 
 	@Override
 	public EdifactRequestEvent generateEvent() {
 		String nextPickupDate = getNextPickupDate();
 		String nextReturnDate = getNextReturnDate(nextPickupDate);
-		return new EdifactRequestEvent(nextransactionId++, getNextAirportCode(),
-				nextPickupDate, getNextPickupTime(), nextReturnDate,
-				getNextReturnTime(), getNextIata());
+		return new EdifactRequestEvent(nextransactionId++,
+				getNextAirportCode(), nextPickupDate, getNextPickupTime(),
+				nextReturnDate, getNextReturnTime(), getNextIata());
 	}
 
 	private String getNextPickupDate() {

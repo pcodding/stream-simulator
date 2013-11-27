@@ -23,13 +23,10 @@ import com.hortonworks.streaming.impl.domain.AbstractEventEmitter;
 public class AggregationServiceSource extends AbstractEventEmitter {
 	private static final long serialVersionUID = 1L;
 	private long nextransactionId = 1555775618;
-	private static String[] airportCodes = { "ABI", "ACT", "AMA", "ATW", "AUS",
-			"BLV", "BMI", "BPT", "BRO", "BWD", "CGI", "CLL", "CMI", "COU",
-			"CRP", "CWA", "DEC", "DFW", "EAU", "ELP", "GGG", "GRB", "HRL",
-			"ILE", "IRK", "JLN", "JVL", "LBB", "LRD", "LSE", "MAF", "MCI",
-			"MDH", "MFE", "MKE", "MLI", "MSN", "MWA", "OSH", "PIA", "SAT",
-			"SGF", "SJT", "SPI", "SPS", "STL", "TBN", "TYR", "UIN", "VCT",
-			"YFC", "YSJ", "YSL" };
+	private static String[] airportCodes = { "ABI", "ACT", "AMA", "AUS", "BLV",
+			"BPT", "BRO", "CLL", "COU", "CRP", "DFW", "ELP", "GGG", "GRB",
+			"HRL", "LBB", "LRD", "MAF", "MCI", "MFE", "MKE", "MSN", "SAT",
+			"SJT", "SPS", "STL", "TBN", "TYR", "YFC", "YSJ" };
 	private Random rand = new Random();
 	private Router router = null;
 

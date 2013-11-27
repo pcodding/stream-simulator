@@ -37,7 +37,8 @@ public class RentalService extends AbstractEventEmitter {
 				% Integer.parseInt(rentalServiceConfig
 						.get("rateChangeEveryEvents")) == 0) {
 			changeRate = true;
-			logger.debug("Changing Rates for " + rentalServiceId);
+			logger.info("Changing Rates for " + rentalServiceId
+					+ "numberOfEvents: " + numberOfEvents);
 		}
 		EdifactResponseEvent responseEvent = new EdifactResponseEvent(
 				nextEvent, rentalServiceConfig, changeRate);
