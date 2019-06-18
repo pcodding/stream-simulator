@@ -45,6 +45,11 @@
 			<artifactId>activemq-core</artifactId>
 			<version>5.7.0</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>stream-simulator</finalName>
